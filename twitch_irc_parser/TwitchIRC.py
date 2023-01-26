@@ -4,6 +4,13 @@ import ast
 from datetime import datetime
 from collections import OrderedDict
 
+PROVIDERS = {
+    0: 'twitch',
+    1: '7tv',
+    2: 'bttv',
+    3: 'ffz',
+}
+
 class Message:
     """A parsed IRC message."""
 
@@ -169,7 +176,7 @@ class Message:
                         emote = {
                             'id': emote_id,
                             'code': emote_code,
-                            'provider': 0,
+                            'provider': 'twitch',
                             'range': [start, end],
                             'urls': [
                                 {
@@ -208,6 +215,11 @@ class Message:
                         start + remove_character_count,
                         end + remove_character_count - 1
                     ]
+
+                    # Map provider int to name
+                    if isinstance(emote.get('provider'), int):
+                        # assuming provider value follows temotes mapping
+                        emote['provider'] = PROVIDERS[emote['provider']]
 
                     if 'zero_width' not in emote.keys():
                         emote['zero_width'] = False

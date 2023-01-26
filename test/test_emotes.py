@@ -52,6 +52,18 @@ EMOTES = {
       ],
       "zero_width": True,
     },
+    "7tv_provider": {
+      "provider": 1,
+      "code": "7tv_provider",
+    },
+    "bttv_provider": {
+      "provider": 2,
+      "code": "bttv_provider",
+    },
+    "ffz_provider": {
+      "provider": 3,
+      "code": "ffz_provider",
+    },
 }
 
 class TestEmotes(unittest.TestCase):
@@ -61,7 +73,7 @@ class TestEmotes(unittest.TestCase):
         expected_kappa_emote = {
             'id': '25',
             'code': 'Kappa',
-            'provider': 0,
+            'provider': 'twitch',
             'range': [0, 4],
             'urls': [
                 {
@@ -181,7 +193,7 @@ class TestEmotes(unittest.TestCase):
         # Check if twitch version is returned
         message = TwitchIRC.Message(raw, emotes=EMOTES)
         self.assertEqual(message.emotes[0]['code'], 'TeaTime')
-        self.assertEqual(message.emotes[0]['provider'], 0)
+        self.assertEqual(message.emotes[0]['provider'], 'twitch')
     
     def test_zero_width(self):
         # twitch emote, is not zero width
@@ -198,6 +210,15 @@ class TestEmotes(unittest.TestCase):
         raw = "type: pubmsg, source: crippledbyte!crippledbyte@crippledbyte.tmi.twitch.tv, target: #testchannel, arguments: ['SteerR'], tags: [{'key': 'badge-info', 'value': None}, {'key': 'badges', 'value': 'broadcaster/1,twitchconEU2022/1'}, {'key': 'color', 'value': '#3FB5BA'}, {'key': 'display-name', 'value': 'CrippledByte'}, {'key': 'emotes', 'value': None}, {'key': 'first-msg', 'value': '0'}, {'key': 'flags', 'value': None}, {'key': 'id', 'value': 'e35baca3-0653-4502-aa6d-ed25006905ea'}, {'key': 'mod', 'value': '0'}, {'key': 'returning-chatter', 'value': '0'}, {'key': 'room-id', 'value': '123456789'}, {'key': 'subscriber', 'value': '0'}, {'key': 'tmi-sent-ts', 'value': '1674656103223'}, {'key': 'turbo', 'value': '0'}, {'key': 'user-id', 'value': '53862903'}, {'key': 'user-type', 'value': None}]"
         message = TwitchIRC.Message(raw, emotes=EMOTES)
         self.assertEqual(message.emotes[0]['zero_width'], True)
+
+    def test_provider_mapping(self):
+        # assuming provider value follows temotes mapping
+        raw = "type: pubmsg, source: crippledbyte!crippledbyte@crippledbyte.tmi.twitch.tv, target: #testchannel, arguments: ['Kappa 7tv_provider bttv_provider ffz_provider'], tags: [{'key': 'badge-info', 'value': None}, {'key': 'badges', 'value': 'broadcaster/1,twitchconEU2022/1'}, {'key': 'color', 'value': '#3FB5BA'}, {'key': 'display-name', 'value': 'CrippledByte'}, {'key': 'emote-only', 'value': '1'}, {'key': 'emotes', 'value': '25:0-4'}, {'key': 'first-msg', 'value': '0'}, {'key': 'flags', 'value': None}, {'key': 'id', 'value': 'e35baca3-0653-4502-aa6d-ed25006905ea'}, {'key': 'mod', 'value': '0'}, {'key': 'returning-chatter', 'value': '0'}, {'key': 'room-id', 'value': '123456789'}, {'key': 'subscriber', 'value': '0'}, {'key': 'tmi-sent-ts', 'value': '1674656103223'}, {'key': 'turbo', 'value': '0'}, {'key': 'user-id', 'value': '53862903'}, {'key': 'user-type', 'value': None}]"
+        message = TwitchIRC.Message(raw, emotes=EMOTES)
+        self.assertEqual(message.emotes[0]['provider'], 'twitch')
+        self.assertEqual(message.emotes[1]['provider'], '7tv')
+        self.assertEqual(message.emotes[2]['provider'], 'bttv')
+        self.assertEqual(message.emotes[3]['provider'], 'ffz')
 
 if __name__ == '__main__':
     unittest.main()

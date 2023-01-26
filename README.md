@@ -91,7 +91,7 @@ key | type | examples | description
 ---|:---:|---|---
 `"id"` | int | `"25"`, `"emotesv2_9df75c0cd2204b6c9f4d079c066e6245"` | Twitch emote id (optional).
 `"code"` | string | `"Kappa"`, `"popCat"` | Text of emote.
-`"provider"` | int | `0`, `1`, `2`, `3` | 0=twitch, 1=7tv, 2=bttv, 3=ffz
+`"provider"` | string | `"twitch"`, `"7tv"`, `"bttv"`, `"ffz"` | Emote provider.
 `"range"` | list | `[0, 4]`, `[21, 32]` | `[start, end]` of emote code position in message text.
 `"urls"` | list | [Url dict](#url-dict) | List of image urls and sizes.
 `"zero_width"` | boolean | | Emote is a zero width emote.
