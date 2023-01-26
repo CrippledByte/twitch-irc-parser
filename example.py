@@ -1,12 +1,12 @@
 from twitch_irc_parser import TwitchIRC
 import json
 
-# User names of bots
+# User ids of bots
 BOTS = {
-    'custombot',
-    'irltoolkit',
-    'nightbot',
-    'streamelements',
+    440504421,  # hachubot
+    429526376,  # irltoolkit
+    19264788,   # nightbot
+    100135110,  # streamelements
 }
 
 # Emotes from temotes API as dict

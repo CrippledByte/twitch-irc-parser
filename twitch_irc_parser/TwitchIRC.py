@@ -24,7 +24,7 @@ class Message:
         emotes : dict
           Emote data from temotes API as dict.
         bots : list
-          List of user names that are bots.
+          List of user ids that are bots.
         """
 
         self.raw = raw.strip()                      # input IRC message ('type: pubmsg, source...')
@@ -109,7 +109,7 @@ class Message:
         self.user['display_name'] = info['display_name']
         self.user['type'] = info['user_type']
         self.user['color'] = info['color']
-        self.user['is_bot'] = self.user['name'] in bots # assuming bot names are lowercase
+        self.user['is_bot'] = self.user['id'] in bots
         self.user['is_mod'] = str_to_bool(info['mod'])
         self.user['is_subscribed'] = str_to_bool(info['subscriber'])
         self.user['is_first_message_in_channel'] = str_to_bool(info['first_msg'])

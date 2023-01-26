@@ -37,7 +37,7 @@ class TestOther(unittest.TestCase):
 
         # is a bot
         raw = "type: pubmsg, source: custombot!custombot@custombot.tmi.twitch.tv, target: #testchannel, arguments: ['@CrippledByte, popCat has been used 7,353 times.'], tags: [{'key': 'badge-info', 'value': 'subscriber/25'}, {'key': 'badges', 'value': 'moderator/1,subscriber/24'}, {'key': 'color', 'value': '#FF69B4'}, {'key': 'display-name', 'value': 'CustomBOT'}, {'key': 'emotes', 'value': None}, {'key': 'first-msg', 'value': '0'}, {'key': 'flags', 'value': None}, {'key': 'id', 'value': 'e35baca3-0653-4502-aa6d-ed25006905ea'}, {'key': 'mod', 'value': '1'}, {'key': 'room-id', 'value': '123456789'}, {'key': 'subscriber', 'value': '1'}, {'key': 'tmi-sent-ts', 'value': '1674656103223'}, {'key': 'turbo', 'value': '0'}, {'key': 'user-id', 'value': '1122334455'}, {'key': 'user-type', 'value': 'mod'}]"
-        message = TwitchIRC.Message(raw, bots=['custombot'])
+        message = TwitchIRC.Message(raw, bots=[1122334455])
         self.assertEqual(message.user['is_bot'], True)
 
     def test_is_broadcaster(self):
