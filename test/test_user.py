@@ -50,15 +50,15 @@ class TestOther(unittest.TestCase):
         message = TwitchIRC.Message(raw)
         self.assertEqual(message.user['is_broadcaster'], True)
 
-    def test_is_mod(self):
+    def test_is_moderator(self):
         # is not a mod in channel
         message = TwitchIRC.Message(MESSAGES[0])
-        self.assertEqual(message.user['is_mod'], False)
+        self.assertEqual(message.user['is_moderator'], False)
 
         # is mod in channel
         raw = "type: pubmsg, source: custombot!custombot@custombot.tmi.twitch.tv, target: #testchannel, arguments: ['@CrippledByte, popCat has been used 7,353 times.'], tags: [{'key': 'badge-info', 'value': 'subscriber/25'}, {'key': 'badges', 'value': 'moderator/1,subscriber/24'}, {'key': 'color', 'value': '#FF69B4'}, {'key': 'display-name', 'value': 'CustomBOT'}, {'key': 'emotes', 'value': None}, {'key': 'first-msg', 'value': '0'}, {'key': 'flags', 'value': None}, {'key': 'id', 'value': 'e35baca3-0653-4502-aa6d-ed25006905ea'}, {'key': 'mod', 'value': '1'}, {'key': 'room-id', 'value': '123456789'}, {'key': 'subscriber', 'value': '1'}, {'key': 'tmi-sent-ts', 'value': '1674656103223'}, {'key': 'turbo', 'value': '0'}, {'key': 'user-id', 'value': '1122334455'}, {'key': 'user-type', 'value': 'mod'}]"
         message = TwitchIRC.Message(raw, bots=['custombot'])
-        self.assertEqual(message.user['is_mod'], True)
+        self.assertEqual(message.user['is_moderator'], True)
 
     def test_is_partner(self):
         # is not partner

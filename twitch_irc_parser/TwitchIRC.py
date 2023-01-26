@@ -45,7 +45,7 @@ class Message:
             'color': None,                          # color of user name in chat
             'subscription_time_months': 0,          # Number of months the user has been subscribed to this channel.
             'is_bot': None,                         # user is pre-defined bot
-            'is_mod': None,                         # user is moderator in this channel
+            'is_moderator': None,                         # user is moderator in this channel
 
             'is_vip': None,                         # user is vip in this channel
             'is_partner': None,                     # user is twitch partner
@@ -110,7 +110,7 @@ class Message:
         self.user['type'] = info['user_type']
         self.user['color'] = info['color']
         self.user['is_bot'] = self.user['id'] in bots
-        self.user['is_mod'] = str_to_bool(info['mod'])
+        self.user['is_moderator'] = str_to_bool(info['mod'])
         self.user['is_subscribed'] = str_to_bool(info['subscriber'])
         self.user['is_first_message_in_channel'] = str_to_bool(info['first_msg'])
         self.user['has_twitch_turbo'] = str_to_bool(info['turbo'])

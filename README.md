@@ -78,7 +78,7 @@ key | type | examples | description
 `"color"` | string | `"#3FB5BA"` | Color of user name.
 `"subscription_time_months"` | int | `25` | Number of months the user has been subscribed to this channel.
 `"is_bot"` | boolean | | User is pre-defined bot.
-`"is_mod"` | boolean | | User is moderator in this channel.
+`"is_moderator"` | boolean | | User is moderator in this channel.
 `"is_vip"` | boolean | | User is vip in this channel.
 `"is_partner"` | boolean | | User is Twitch partner.
 `"is_broadcaster"` | boolean | | User is broadcaster in this channel.
