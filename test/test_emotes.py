@@ -5,8 +5,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from twitch_irc_parser import TwitchIRC
 
-EMOTES = {
-    "TeaTime": {
+EMOTES = [
+    {
         "provider": 1,
         "code": "TeaTime",
         "urls": [
@@ -29,7 +29,7 @@ EMOTES = {
         ],
         "zero_width": False,
     },
-    "SteerR": {
+    {
       "provider": 1,
       "code": "SteerR",
       "urls": [
@@ -52,19 +52,19 @@ EMOTES = {
       ],
       "zero_width": True,
     },
-    "7tv_provider": {
+    {
       "provider": 1,
       "code": "7tv_provider",
     },
-    "bttv_provider": {
+    {
       "provider": 2,
       "code": "bttv_provider",
     },
-    "ffz_provider": {
+    {
       "provider": 3,
       "code": "ffz_provider",
     },
-}
+]
 
 class TestEmotes(unittest.TestCase):
     def test_emote_passthrough(self):
@@ -91,10 +91,12 @@ class TestEmotes(unittest.TestCase):
             ],
             'zero_width': False,
         }
+        expected_teatime_emote = [emote for emote in EMOTES if emote["code"] == "TeaTime"][0]
+
         message = TwitchIRC.Message(raw, emotes=EMOTES)
         self.assertEqual(len(message.emotes), 2)
         self.assertEqual(message.emotes[0], expected_kappa_emote)
-        self.assertEqual(message.emotes[1], EMOTES['TeaTime'])
+        self.assertEqual(message.emotes[1], expected_teatime_emote)
 
         # without input emote data, use emote data provided by Twitch in IRC message
         message = TwitchIRC.Message(raw)

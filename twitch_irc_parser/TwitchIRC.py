@@ -14,18 +14,24 @@ PROVIDERS = {
 class Message:
     """A parsed IRC message."""
 
-    def __init__(self, raw, emotes={}, bots=[]):
+    def __init__(self, raw, emotes=[], bots=[]):
         """Parse an IRC message.
 
         Parameters
         ----------
         raw : str
           Input IRC message.
-        emotes : dict
-          Emote data from temotes API as dict.
+        emotes : list
+          Emote data in temotes API format.
         bots : list
           List of user ids that are bots.
         """
+
+        # Convert emotes to dict
+        # If using data from temotes API, emotes from Twitch may also be included.
+        # Skip Twitch emotes to prevent third party emotes from being overwritten by Twitch emotes when converting to dict.
+        # Twitch emotes will be retrieved from IRC message data.
+        emotes_dict = {emote['code']: emote for emote in emotes if emote['provider'] != 0}
 
         self.raw = raw.strip()                      # input IRC message ('type: pubmsg, source...')
         self.is_parsed = False                      # message was parsed successfully
@@ -198,18 +204,18 @@ class Message:
                         message_emotes.append(emote)
 
         # Find emotes from third party providers
-        if len(emotes.keys()) > 0: # skip if third party emote data is not passed
+        if len(emotes_dict.keys()) > 0: # skip if third party emote data is not passed
             words = self.text.split(' ')
             temp = message_emotes[:] # create clone of Twitch emotes list, used to prevent only adding 1 same other emote per comment
             temptext = self.text # copy text, used to get range and remove emotes afterwards
             remove_character_count = 0
             for word in words:
-                if word in emotes and not any(e['code'] == word for e in temp):
+                if word in emotes_dict and not any(e['code'] == word for e in temp):
                     # Get range of emote
                     start = temptext.find(word)
                     end = start + len(word)
 
-                    emote = emotes[word]
+                    emote = emotes_dict[word]
                     emote['code'] = word # overwrite code
                     emote['range'] = [
                         start + remove_character_count,
