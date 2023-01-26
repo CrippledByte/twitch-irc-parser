@@ -4,16 +4,25 @@ Parser for Twitch IRC messages.
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/CrippledByte/twitch-irc-parser/python-test.yml)
 
 - [Usage](#usage)
+- [Installation](#installation)
 - [Message class](#message-class)
 - [Development](#development)
     - [Download repo](#download-repo)
     - [Run tests](#run-tests)
 
+## Installation
+```bash
+git clone https://github.com/CrippledByte/twitch-irc-parser
+cd twitch-irc-parser
+```
+
 ## Usage
 ```python
+from twitch_irc_parser import TwitchIRC
+
 raw = "type: pubmsg, source: crippledbyte!crippledbyte@crippledbyte.tmi.twitch.tv, target: #testchannel, arguments: ['Kappa this is a test FeelsDankMan TeaTime'], tags: [{'key': 'badge-info', 'value': None}, {'key': 'badges', 'value': 'broadcaster/1,twitchconEU2022/1'}, {'key': 'color', 'value': '#3FB5BA'}, {'key': 'display-name', 'value': 'CrippledByte'}, {'key': 'emotes', 'value': '25:0-4'}, {'key': 'first-msg', 'value': '0'}, {'key': 'flags', 'value': None}, {'key': 'id', 'value': 'e35baca3-0653-4502-aa6d-ed25006905ea'}, {'key': 'mod', 'value': '0'}, {'key': 'returning-chatter', 'value': '0'}, {'key': 'room-id', 'value': '123456789'}, {'key': 'subscriber', 'value': '0'}, {'key': 'tmi-sent-ts', 'value': '1674656103223'}, {'key': 'turbo', 'value': '0'}, {'key': 'user-id', 'value': '53862903'}, {'key': 'user-type', 'value': None}]"
 
-message = TwitchIRC.Message(raw, emotes=EMOTES, bots=BOTS)
+message = TwitchIRC.Message(raw)
 
 if message.is_parsed:
     print('User: @' + message.user['display_name'])
