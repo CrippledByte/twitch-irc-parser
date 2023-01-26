@@ -1,6 +1,7 @@
 import os
 import sys
 import unittest
+import time
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from twitch_irc_parser import TwitchIRC
@@ -47,8 +48,23 @@ class TestOther(unittest.TestCase):
         self.assertEqual(message.tmi_sent_ts, 1674656103223)
 
     def test_timestamp(self):
+        # Test in different timezones
+        utc_timestamp = '2023-01-25T14:15:03.223000'
+
+        os.environ['TZ'] = 'Europe/London'
+        time.tzset()
         message = TwitchIRC.Message(MESSAGES[0])
-        self.assertEqual(message.timestamp, '2023-01-25T15:15:03.223000')
+        self.assertEqual(message.timestamp, utc_timestamp)
+
+        os.environ['TZ'] = 'Europe/Amsterdam'
+        time.tzset()
+        message = TwitchIRC.Message(MESSAGES[0])
+        self.assertEqual(message.timestamp, utc_timestamp)
+
+        os.environ['TZ'] = 'US/Eastern'
+        time.tzset()
+        message = TwitchIRC.Message(MESSAGES[0])
+        self.assertEqual(message.timestamp, utc_timestamp)
 
     def test_text_color(self):
         message = TwitchIRC.Message(MESSAGES[0])

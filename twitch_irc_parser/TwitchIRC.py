@@ -79,7 +79,7 @@ class Message:
         self.id = info['id']
 
         self.tmi_sent_ts = int(info['tmi_sent_ts'])
-        dt = datetime.fromtimestamp(self.tmi_sent_ts / 1000)
+        dt = datetime.utcfromtimestamp(self.tmi_sent_ts / 1000)
         self.timestamp = dt.isoformat()
 
         # Get message text
