@@ -1,6 +1,8 @@
 # twitch-irc-parser
 Parser for Twitch IRC messages.
 
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/CrippledByte/twitch-irc-parser/python-test.yml)
+
 - [Usage](#usage)
 - [Message class](#message-class)
 - [Development](#development)
