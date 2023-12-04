@@ -97,6 +97,7 @@ class Message:
 
         # Get message text
         text = match.group(4)
+        text = text.replace("\\'", "'") # fix escaped single quotes
         text = re.sub(r'\\U000e0000', '', text) # remove invisible character
         text = text.strip() # remove whitespace at start and end
         self.text = text

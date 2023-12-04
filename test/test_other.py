@@ -6,9 +6,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from twitch_irc_parser import TwitchIRC
 
-MESSAGES = [
-    "type: pubmsg, source: crippledbyte!crippledbyte@crippledbyte.tmi.twitch.tv, target: #testchannel, arguments: ['FeelsDankMan Clap'], tags: [{'key': 'badge-info', 'value': 'subscriber/25'}, {'key': 'badges', 'value': 'subscriber/24,twitchconEU2022/1'}, {'key': 'color', 'value': '#3FB5BA'}, {'key': 'display-name', 'value': 'CrippledByte'}, {'key': 'emotes', 'value': None}, {'key': 'first-msg', 'value': '0'}, {'key': 'flags', 'value': None}, {'key': 'id', 'value': 'e35baca3-0653-4502-aa6d-ed25006905ea'}, {'key': 'mod', 'value': '0'}, {'key': 'returning-chatter', 'value': '0'}, {'key': 'room-id', 'value': '123456789'}, {'key': 'subscriber', 'value': '1'}, {'key': 'tmi-sent-ts', 'value': '1674656103223'}, {'key': 'turbo', 'value': '0'}, {'key': 'user-id', 'value': '53862903'}, {'key': 'user-type', 'value': None}]",
-]
+with open('test/test_other.txt') as file:
+	MESSAGES = file.read().splitlines()
 
 class TestOther(unittest.TestCase):
     def test_is_parsed(self):
@@ -27,6 +26,9 @@ class TestOther(unittest.TestCase):
     def test_text(self):
         message = TwitchIRC.Message(MESSAGES[0])
         self.assertEqual(message.text, 'FeelsDankMan Clap')
+
+        message = TwitchIRC.Message(MESSAGES[1])
+        self.assertEqual(message.text, '"I\'m serious" Kappa')
 
         # text with emoji
         raw = "type: pubmsg, source: crippledbyte!crippledbyte@crippledbyte.tmi.twitch.tv, target: #testchannel, arguments: ['monkaLaugh 👍'], tags: [{'key': 'badge-info', 'value': 'subscriber/19'}, {'key': 'badges', 'value': 'subscriber/18,twitchconEU2022/1'}, {'key': 'color', 'value': '#3FB5BA'}, {'key': 'display-name', 'value': 'CrippledByte'}, {'key': 'emotes', 'value': None}, {'key': 'first-msg', 'value': '0'}, {'key': 'flags', 'value': None}, {'key': 'id', 'value': 'e35baca3-0653-4502-aa6d-ed25006905ea'}, {'key': 'mod', 'value': '0'}, {'key': 'returning-chatter', 'value': '0'}, {'key': 'room-id', 'value': '123456789'}, {'key': 'subscriber', 'value': '1'}, {'key': 'tmi-sent-ts', 'value': '1674656103223'}, {'key': 'turbo', 'value': '0'}, {'key': 'user-id', 'value': '53862903'}, {'key': 'user-type', 'value': None}]"
