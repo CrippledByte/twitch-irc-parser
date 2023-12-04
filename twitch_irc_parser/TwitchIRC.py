@@ -118,13 +118,13 @@ class Message:
         self.user['is_bot'] = self.user['id'] in bots
         self.user['is_moderator'] = str_to_bool(info['mod'])
         self.user['is_subscribed'] = str_to_bool(info['subscriber'])
-        self.user['is_first_message_in_channel'] = str_to_bool(info['first_msg'])
-        self.user['has_twitch_turbo'] = str_to_bool(info['turbo'])
+        self.user['is_first_message_in_channel'] = str_to_bool(info.get('first_msg', 'False'))
+        self.user['has_twitch_turbo'] = str_to_bool(info.get('turbo', 'False'))
 
         # TODO parse 'flags'
 
         # Parse badges
-        if info['badges'] is not None:
+        if (info['badges'] is not None) and (info['badges'] != ''):
             for badge_str in info['badges'].split(','):
                 badge_split = badge_str.split('/')
                 # [0]: subscriber, moderator, vip, bits, sub-gift-leader, glitchcon2020, partner
@@ -133,7 +133,7 @@ class Message:
 
         # Get additional information from 'badge-info' key
         badge_infos = dict()
-        if info['badge_info'] is not None:
+        if (info['badge_info'] is not None) and (info['badge_info'] != ''):
             for badge_info_str in info['badge_info'].split(','):
                 badge_info_split = badge_info_str.split('/')
                 # [0]: subscriber, sub-gift-leader, glitchcon2020
